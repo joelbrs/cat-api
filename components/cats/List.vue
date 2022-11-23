@@ -2,28 +2,29 @@
     <v-container>
         <v-row>
             <v-col
-            v-for="cat in cats"
+            v-for="(cat ) in cats"
             :key="cat.id"
             cols="4">
-                <v-card height="500">
 
+                <v-card height="650">
                     <div class="buttons">
                         <v-btn color="rgba(255, 0, 0)">Love it</v-btn>
                         <v-btn color="rgba(0, 255, 0)">Nope it</v-btn>
                     </div>
       
-                    <v-img src="" max-height="200" max-width="380px"></v-img>
+                    <v-img class="img" :src="cat.image ? cat.image.url : ''" max-height="250" max-width="380px"></v-img>
               
                     <div class="infos">
                         <h4>{{cat.name}}</h4>
-                        <p>{{cat.description}}</p>
-                        <p>{{cat.temperament}}</p>
+                        <p class="description">{{cat.description}}</p>
+                        <p class="temperament">{{cat.temperament}}</p>
                         <p>---</p>
-                        <p>{{cat.weight.metric}} kg</p>
-                        <p>{{cat.weight.imperial}} average life span</p>
+                        <p class="metric">{{cat.weight.metric}} kg</p>
+                        <p class="imperial">{{cat.weight.imperial}} average life span</p>
                     </div>
               
-                    <v-btn class="fav" width="370px" color="4ef">Fav</v-btn>
+                    <v-btn class="fav-btn" width="370px" color="4ef" @click="fav = true">Fav</v-btn>
+                    <p class="fav-text" v-show="fav">Favoritado!</p>
                 </v-card>
             </v-col>
         </v-row>
@@ -37,13 +38,20 @@ export default {
  
     data() {
         return {
-            cats: null,
+            cats: [],
+            fav: false
         }
-  },
+    },
 
-  async fetch() {
-    this.cats = await this.$axios.$get(`breeds`)
-  }
+    methods: {
+      async getCats() {
+        this.cats = await this.$axios.$get(`breeds`)
+      }
+    },
+
+    created() {
+      this.getCats()
+    }
 }
 </script>
 
@@ -57,6 +65,10 @@ export default {
   max-width: 380px;
   padding: 15px 0;
 
+}
+
+.img {
+  margin: 10px 0
 }
 
 .infos, .buttons {

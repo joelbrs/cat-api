@@ -8,11 +8,13 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "test": "jest",
+    "test:watch": "jest --watch",
     "test:cov": "jest --coverage"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.25.3",
+    "jw-vue-pagination": "^1.0.3",
     "nuxt": "^2.15.8",
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",
