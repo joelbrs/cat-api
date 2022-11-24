@@ -1,13 +1,18 @@
-import ListCats from '@/components/cats/List.vue'
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vue from 'vue'
 
 import Vuetify from 'vuetify'
 Vue.use(Vuetify)
 
+import ListCats from '@/components/cats/List.vue'
 const localVue = createLocalVue()
 
-describe('Botao de Fav', () => {
+const { getCats } = require(`@/components/cats/List.vue`)
+
+let myMock = {}
+myMock.getCats = jest.fn()
+
+describe('testando fetch', () => {
 
     let vuetify
 
@@ -15,7 +20,7 @@ describe('Botao de Fav', () => {
         vuetify = new Vuetify()
     })
 
-    it('checando se aparece o texto', async () => {
+    it('checando se faz a requisição', async () => {
 
         const wrapper = mount(ListCats, {
             localVue,
@@ -29,13 +34,9 @@ describe('Botao de Fav', () => {
             }
         })
 
-        wrapper.vm.getCats = jest.fn()
+        myMock.getCats()
 
-        expect(wrapper.find('.fav-text').text()).toBe('')
-
-        await wrapper.find('.fav-btn').trigger('click')
-
-        expect(wrapper.find('.fav-text').text()).toBe('Favoritado!')
+        expect(myMock.getCats.mock.calls.length).toBe(1)
 
     })
 })
