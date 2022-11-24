@@ -6,6 +6,7 @@
             :key="cat.id"
             cols="4">
 
+              {{cats[0].name}}
                 <v-card height="650">
                     <div class="buttons">
                         <v-btn color="rgba(255, 0, 0)">Love it</v-btn>
@@ -32,6 +33,8 @@
 </template>
 
 <script>
+import { api } from '@/services.js'
+
 export default {
 
     name: 'ListCats',
@@ -44,8 +47,14 @@ export default {
     },
 
     methods: {
-      async getCats() {
-        this.cats = await this.$axios.$get(`breeds`)
+      getCats() {
+         return api
+              .get()
+              .then(r => {
+                this.cats = r.data
+
+                return r.data
+              })
       }
     },
 

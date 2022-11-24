@@ -1,42 +1,34 @@
-import { mount, createLocalVue } from '@vue/test-utils'
 import Vue from 'vue'
-
 import Vuetify from 'vuetify'
+import { mount, createLocalVue } from '@vue/test-utils'
+import ListCats from '@/components/cats/List'
+
+let localVue = createLocalVue()
+
 Vue.use(Vuetify)
 
-import ListCats from '@/components/cats/List.vue'
-const localVue = createLocalVue()
+describe('ListCats', () => {
 
-const { getCats } = require(`@/components/cats/List.vue`)
-
-let myMock = {}
-myMock.getCats = jest.fn()
-
-describe('testando fetch', () => {
-
-    let vuetify
+    let wrapper, vuetify
 
     beforeEach(() => {
-        vuetify = new Vuetify()
-    })
+        vuetify = new Vuetify(),
 
-    it('checando se faz a requisição', async () => {
-
-        const wrapper = mount(ListCats, {
-            localVue,
-            
+        wrapper = mount(ListCats, {
             vuetify,
-            
+
+            localVue,
+
             data() {
                 return {
                     cats: []
                 }
             }
         })
+    })
 
-        myMock.getCats()
-
-        expect(myMock.getCats.mock.calls.length).toBe(1)
-
+    it('verificando requisição', async () => {
+        const data = await wrapper.vm.getCats()
+        expect(data[0].id).toBe('abys')
     })
 })
