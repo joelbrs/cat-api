@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 import { mount, createLocalVue } from '@vue/test-utils'
 import ListCats from '@/components/cats/List'
+import * as axios from 'axios'
 
 let localVue = createLocalVue()
 
@@ -23,12 +24,31 @@ describe('ListCats', () => {
                 return {
                     cats: []
                 }
-            }
+            },
         })
     })
 
+    jest.mock('axios', () => {
+        return {
+            getCats: Promise.resolve(
+                {
+                    data: 
+                    [
+                        {
+                            id: 'abyss'
+                        }
+                    ]
+                }
+            )
+        }
+    })
+
     it('verificando requisição', async () => {
+
         const data = await wrapper.vm.getCats()
-        expect(data[0].id).toBe('abys')
+        //console.log(data)
+        expect(data).toBe('abys')
+
+        console.log(axios)
     })
 })

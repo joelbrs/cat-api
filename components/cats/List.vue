@@ -48,14 +48,8 @@ export default {
 
     methods: {
       getCats() {
-         return api
-              .get()
-              .then(r => {
-                this.cats = r.data
-
-                return r.data
-              })
-      }
+          api.get().then(r => {this.cats = r.data})
+      },
     },
 
     created() {
