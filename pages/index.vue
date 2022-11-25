@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import ListCats from '@/components/cats/List.vue'
+import ListCats from '~/components/cats/ListCats.vue'
 
 export default {
   name: 'IndexPage',
